@@ -1,0 +1,12 @@
+%ul.nav.nav-list
+  - if verify_user(['Admin'])
+    = active_link_fullpath 'REGIONS', '/regions'
+  - if verify_user(['Admin', 'Staff'])
+    = active_link_fullpath 'INSTRUMENTS', '/instruments'
+  - if verify_user(['Admin', 'Staff'])
+    = active_link_fullpath 'PROGRAM TYPES', '/program_types'
+  - if verify_user(['Admin', 'Staff'])
+    = active_link_fullpath 'SCHOOLS', '/schools'
+  - if verify_user(['Admin', 'Staff', 'Teacher'])
+    = active_link_fullpath 'PROGRAMS', '/programs'
+%br

@@ -1,10 +1,25 @@
-%h1 Instruments
-%table
-  %tr
-    %td Name
-  - @instruments.each do |instrument|
+- content_for :title do
+  programs/instruments
+
+- content_for :sidemenu do
+  - render '/layouts/programs_page_sidebar'
+
+- content_for :action_button do
+  %a.btn.btn-primary.delete-entry{'data-url' => "/instruments/destroy_multi"}
+    %i.icon-trash.icon-white
+  %a.btn.btn-primary.new-entry{:href => "/instruments/new", "data-entry" => "instrument"}
+    %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Instrument", :css_class => "new-entry"
+
+- content_for :main do
+  %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
-      %td= instrument.name
-      %td= link_to('edit', edit_instrument_path(instrument))
-      %td= link_to('delete', instrument, :method => :delete, :data => {:confirm => "Are you sure?"})
-= link_to('Add An Instrument', new_instrument_path)
+      %th{:width => '10px'}
+      %th INSTRUMENT NAME
+      - @instruments.each do |instrument|
+        %tr
+          %td
+            %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{instrument.id}"}
+          %td
+            %a.x-editable-input-text{:href => '#', 'data-url' => "/instruments/#{instrument.id}", 'data-pk' => "#{instrument.id}", 'data-name' => 'name', 'data-placeholder' => 'input instrument name'}
+              = instrument.name

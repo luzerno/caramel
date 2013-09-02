@@ -1,0 +1,34 @@
+- content_for :title do
+  people/staff
+
+- content_for :sidemenu do
+  = render '/layouts/people_page_sidebar'
+
+- content_for :action_button do
+  %a.btn.btn-primary.delete-entry{'data-url' => "/staffs/destroy_multi"}
+    %i.icon-trash.icon-white
+  %a.btn.btn-primary.new-entry{:href => "/staffs/new", "data-entry" => "staff"}
+    %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Staff", :css_class => "new-entry"
+  %a.btn.btn-primary
+    RESET PASSWORD
+  
+- content_for :main do
+  %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
+    %tr
+      %th{:width => '10px'}
+      %th{:width => '310px'} NAME
+      %th{:width => '280px'} EMAIL
+      %th REGION
+    - @staffs.each do |staff|
+      %tr
+        %td
+          %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{staff.id}"}
+        %td
+          %a.x-editable-input-user-name{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}"}
+            = staff.name
+        %td
+          %a.x-editable-input-text{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}", 'data-name' => 'email', 'data-placeholder' => 'input email'}
+            = staff.email
+        %td
+          = multiple_selection(Region.all_ordered_json, staff.region_ids, staff.id, "/staffs/#{staff.id}", 'regions')

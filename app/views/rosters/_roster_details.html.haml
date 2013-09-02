@@ -1,0 +1,12 @@
+- unless not (roster.start_date.nil? or roster.end_date.nil?) and roster.start_date <= Date.today and Date.today <= roster.end_date
+  - row_class = "warning"
+%tr{:class => row_class}
+  %td
+    %a{:href => "#"}
+      = content_tag :span, course.name
+  %td
+    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-value" => roster.start_date, "data-name" => "start_date", "data-emptytext" => "start date"}
+  %td
+    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-value" => roster.end_date, "data-name" => "end_date", "data-emptytext" => "end date"}
+  %td
+    %a.x-editable.roster-notes{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-name" => "notes", "data-value" => roster.notes, "data-emptytext" => "notes"}
